@@ -40,7 +40,7 @@ router.get("/my-leaves", authMiddleware, async (req, res) => {
 });
 
 // ✅ Admin views all leave requests
-router.get("/leaves", authMiddleware, roleMiddleware(["admin", "hr"]), async (req, res) => {
+router.get("/", authMiddleware, roleMiddleware(["admin", "hr"]), async (req, res) => {
     const leaves = await Leave.find().populate("employee", "name email");
     res.json(leaves);
 });

@@ -89,7 +89,7 @@ router.delete("/employees/:id", authMiddleware, roleMiddleware(["admin"]), async
 });
 
 // Get current user profile
-router.get("/profile", async (req, res) => {
+router.get("/profile", authMiddleware, async (req, res) => {
     const user = await User.findById(req.user.id).select("-password");
     res.json(user);
 });

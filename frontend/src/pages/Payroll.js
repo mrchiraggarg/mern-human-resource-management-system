@@ -172,7 +172,7 @@ const Payroll = () => {
           <PayrollItem key={record._id}>
             {user?.role === "admin" && <EmployeeName>{record.employee.name} ({record.employee.email})</EmployeeName>}
             <PayrollDetails>
-              Salary: ${record.basicSalary} | Deductions: ${record.deductions} | Bonuses: ${record.bonuses} | Net Salary: ${record.netSalary} | Date: {record.paymentDate.split("T")[0]}
+              Salary: INR {record.basicSalary} | Deductions: INR {record.deductions} | Bonuses: INR {record.bonuses} | Net Salary: INR {record.netSalary} | Date: {record.paymentDate.split("T")[0]}
             </PayrollDetails>
           </PayrollItem>
         ))}

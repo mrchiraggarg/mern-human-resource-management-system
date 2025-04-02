@@ -41,12 +41,18 @@ const Training = () => {
   const enrollTraining = async (id) => {
     const token = localStorage.getItem("token");
 
-    await axios.post(`http://localhost:5000/api/training/${id}/enroll`, {}, {
+    const enrollAlert = await axios.post(`http://localhost:5000/api/training/${id}/enroll`, {}, {
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    alert("Enrolled successfully!");
-    window.location.reload();
+    if (enrollAlert.data.code == "enrolled-successfully") {
+      alert("Enrolled successfully!");
+      window.location.reload();
+    } else if (enrollAlert.data.code == "already-enrolled") {
+      alert("You have already enrolled in this training.");
+    } else {
+      alert("Error Occured. Please try again later.");
+    }
   };
 
   return (
@@ -71,8 +77,8 @@ const Training = () => {
             <TrainingDescription>{training.description}</TrainingDescription>
             <TrainerInfo>Trainer: {training.trainer}</TrainerInfo>
             <TrainingDate>Date: {new Date(training.date).toLocaleDateString()}</TrainingDate>
-            {training.attendees.some((attendee) => attendee._id === user?.id) ? (
-              <EnrolledBadge>✅ Enrolled</EnrolledBadge>
+            {training.attendees?.some((attendee) => attendee._id === user?._id) ? (
+              <EnrollButton>Enrolled</EnrollButton>
             ) : (
               <EnrollButton onClick={() => enrollTraining(training._id)}>Enroll Now</EnrollButton>
             )}

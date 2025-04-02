@@ -24,7 +24,7 @@ const NotificationList = styled.ul`
 `;
 
 const NotificationItem = styled.li`
-  background-color: ${props => props.read ? '#1a242f' : '#252e39'};
+  background-color: ${props => props.$read ? '#1a242f' : '#252e39'};
   margin-bottom: 1rem;
   padding: 1.5rem;
   border-radius: 8px;
@@ -41,7 +41,7 @@ const NotificationItem = styled.li`
 
 const Message = styled.span`
   font-size: 1rem;
-  color: ${props => props.read ? '#8197a4' : '#fff'};
+  color: ${props => props.$read ? '#8197a4' : '#fff'};
 `;
 
 const ReadButton = styled.button`
@@ -98,8 +98,8 @@ const Notifications = () => {
             <NotificationList>
                 {notifications && notifications.length > 0 ? (
                     notifications.map((n) => (
-                        <NotificationItem key={n._id} read={n.read}>
-                            <Message read={n.read}>{n.message}</Message>
+                        <NotificationItem key={n._id} $read={n.read}>
+                            <Message $read={n.read}>{n.message}</Message>
                             {!n.read && <ReadButton onClick={() => markAsRead(n._id)}>Mark as Read</ReadButton>}
                         </NotificationItem>
                     ))

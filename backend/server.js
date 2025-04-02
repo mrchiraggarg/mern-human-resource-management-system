@@ -3,14 +3,14 @@ import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
 import attendanceRoutes from "./routes/attendanceRoutes.js";
-import chatRoutes from "./routes/chatRoutes.js";
+// import chatRoutes from "./routes/chatRoutes.js";
 import leaveRoutes from "./routes/leaveRoutes.js";
 import notificationRoutes from "./routes/notificationRoutes.js";
 import payrollRoutes from "./routes/payrollRoutes.js";
 import performanceRoutes from "./routes/performanceRoutes.js";
 import trainingRoutes from "./routes/trainingRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
-import { Server } from "socket.io";
+// import { Server } from "socket.io";
 import http from "http";
 
 dotenv.config();
@@ -29,7 +29,7 @@ app.use(express.json()); // Allow JSON requests
 
 // Apply role-based access control (RBAC)
 app.use("/api/attendance", attendanceRoutes);
-app.use("/api/chats", chatRoutes);
+// app.use("/api/chats", chatRoutes);
 app.use("/api/leave", leaveRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/payroll", payrollRoutes);
@@ -51,25 +51,25 @@ app.get("/", (req, res) => {
 });
 
 // Socket.IO Setup
-const io = new Server(server, {
-    cors: {
-        origin: "http://localhost:3000",
-        methods: ["GET", "POST"],
-        credentials: true
-    }
-});
+// const io = new Server(server, {
+//     cors: {
+//         origin: "http://localhost:3000",
+//         methods: ["GET", "POST"],
+//         credentials: true
+//     }
+// });
 
-io.on("connection", (socket) => {
-    console.log("A user connected:", socket.id);
+// io.on("connection", (socket) => {
+//     console.log("A user connected:", socket.id);
 
-    socket.on("sendMessage", (data) => {
-        io.to(data.receiverId).emit("receiveMessage", data);
-    });
+//     socket.on("sendMessage", (data) => {
+//         io.to(data.receiverId).emit("receiveMessage", data);
+//     });
 
-    socket.on("disconnect", () => {
-        console.log("A user disconnected");
-    });
-});
+//     socket.on("disconnect", () => {
+//         console.log("A user disconnected");
+//     });
+// });
 
 // Error handling middleware
 app.use((err, req, res, next) => {

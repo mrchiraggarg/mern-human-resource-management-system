@@ -100,13 +100,15 @@ const RejectButton = styled(Button)`
   }
 `;
 
-const Status = styled.span`
+const Status = styled.span.attrs(props => ({
+  style: {
+    background: props.$status === 'approved' ? '#2ecc71' :
+               props.$status === 'rejected' ? '#e74c3c' : '#f1c40f'
+  }
+}))`
   padding: 5px 10px;
   border-radius: 4px;
   font-weight: bold;
-  background: ${props => 
-    props.status === 'approved' ? '#2ecc71' :
-    props.status === 'rejected' ? '#e74c3c' : '#f1c40f'};
 `;
 
 const LeaveManagement = () => {
@@ -208,7 +210,7 @@ const LeaveManagement = () => {
               {user?.role === "admin" && <strong>{leave.employee.name} ({leave.employee.email})</strong>}
               <p>{leave.startDate} to {leave.endDate}</p>
               <p>Reason: {leave.reason}</p>
-              <Status status={leave.status}>{leave.status.toUpperCase()}</Status>
+              <Status $status={leave.status}>{leave.status.toUpperCase()}</Status>
             </LeaveInfo>
             {user?.role === "admin" && leave.status === "pending" && (
               <ButtonGroup>

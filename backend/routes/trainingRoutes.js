@@ -30,12 +30,12 @@ router.post("/:id/enroll", authMiddleware, async (req, res) => {
   if (!training) return res.status(404).json({ message: "Training not found" });
 
   if (training.attendees.includes(req.user.id)) {
-    return res.status(400).json({ message: "Already enrolled" });
+    return res.json({ message: "Already enrolled", code: "already-enrolled" });
   }
 
   training.attendees.push(req.user.id);
   await training.save();
-  res.json({ message: "Enrolled successfully" });
+  res.json({ message: "Enrolled successfully", code: "enrolled-successfully" });
 });
 
 export default router;

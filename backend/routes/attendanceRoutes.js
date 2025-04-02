@@ -39,7 +39,7 @@ router.get("/my-attendance", authMiddleware, async (req, res) => {
 });
 
 // ✅ Admin views all employees' attendance
-router.get("/", authMiddleware, roleMiddleware(["admin", "hr"]), async (req, res) => {
+router.get("/all", authMiddleware, roleMiddleware(["admin", "hr"]), async (req, res) => {
     try {
         const attendanceRecords = await Attendance.find().populate("employee", "name email");
         res.json(attendanceRecords);

@@ -22,33 +22,6 @@ const Header = styled.div`
   }
 `;
 
-const Navigation = styled.nav`
-  background-color: #1a242f;
-  border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 30px;
-  
-  ul {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-  }
-  
-  li a {
-    color: #fff;
-    text-decoration: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-    
-    &:hover {
-      background-color: #00a8e1;
-    }
-  }
-`;
-
 const Button = styled.button`
   background-color: #00a8e1;
   color: white;
@@ -110,30 +83,12 @@ const Section = styled.div`
   }
 `;
 
-const Dashboard = () => {
-    const [unreadCount, setUnreadCount] = useState(0);
-    const [user, setUser] = useState(null);
+const Employee = () => {
     const [employees, setEmployees] = useState([]);
+    const [user, setUser] = useState(null);
     const [editingEmployee, setEditingEmployee] = useState(null);
     const [newEmployee, setNewEmployee] = useState({ name: "", email: "", password: "", role: "employee" });
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const fetchUnreadNotifications = async () => {
-            try {
-                const token = localStorage.getItem("token");
-                const res = await axios.get("http://localhost:5000/api/notifications", {
-                    headers: { Authorization: `Bearer ${token}` },
-                });
-                setUnreadCount(res.data.filter((n) => !n.read).length);
-            } catch (error) {
-                console.error("Error fetching notifications:", error);
-                setUnreadCount(0);
-            }
-        };
-
-        fetchUnreadNotifications();
-    }, []);
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -215,32 +170,12 @@ const Dashboard = () => {
         }
     };
 
-    const handleLogout = () => {
-        localStorage.removeItem("token");
-        navigate("/");
-    };
-
     return (
         <DashboardContainer>
-            <Header>
+            {/* <Header>
                 <h2>Welcome, {user?.name}</h2>
                 <p>Role: {user?.role}</p>
-            </Header>
-
-            <Navigation>
-                <ul>
-                    <li><Link to="/attendance">Attendance</Link></li>
-                    <li><Link to="/leaves">Leave Management</Link></li>
-                    {/* {["admin", "hr"].includes(user?.role) && <li><Link to="/employees">Employees</Link></li>} */}
-                    {user?.role === "admin" && <li><Link to="/payroll">Payroll</Link></li>}
-                    {user?.role === "admin" && <li><Link to="/performance">Performance</Link></li>}
-                    <li><Link to="/training">Training & Development</Link></li>
-                    <li><Link to="/notifications">Notifications {unreadCount > 0 && `(${unreadCount})`}</Link></li>
-                    {/* <li><Link to="/chat">Live Chat</Link></li> */}
-                </ul>
-            </Navigation>
-
-            <Button onClick={handleLogout}>Logout</Button>
+            </Header> */}
 
             {user?.role === "admin" ? (
                 <Section>
@@ -294,4 +229,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default Employee;

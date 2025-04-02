@@ -6,9 +6,11 @@ const router = express.Router();
 
 // ✅ Admin adds payroll entry
 router.post("/", authMiddleware, roleMiddleware(["admin", "hr"]), async (req, res) => {
-  const { employee, basicSalary, deductions, bonuses } = req.body;
+  const { employee, basicSalary: basicSalaryStr, deductions: deductionsStr, bonuses: bonusesStr } = req.body;
+  const basicSalary = parseFloat(basicSalaryStr) || 0;
+  const deductions = parseFloat(deductionsStr) || 0;
+  const bonuses = parseFloat(bonusesStr) || 0;
   const netSalary = basicSalary + bonuses - deductions;
-
   if (!employee || !basicSalary) return res.status(400).json({ message: "All fields are required" });
 
   try {

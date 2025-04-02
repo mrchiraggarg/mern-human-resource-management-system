@@ -5,7 +5,7 @@ import { authMiddleware, roleMiddleware } from "../middleware/authMiddleware.js"
 const router = express.Router();
 
 // ✅ Get notifications for logged-in user
-router.get("/notifications", authMiddleware, async (req, res) => {
+router.get("/", authMiddleware, async (req, res) => {
     const notifications = await Notification.find({ user: req.user.id }).sort({ createdAt: -1 });
     res.json(notifications);
 });
